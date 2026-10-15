@@ -1,0 +1,15 @@
+node_modules/
+.next/
+.venv/
+__pycache__/
+*.pyc
+*.db
+.env
+.env.local
+.pytest_cache/
+backend/uploads/
+backend/.secret_key
+
+refrence pages for idea/portfolio.html
+backend/.pytest_cache/
+*.tsbuildinfo

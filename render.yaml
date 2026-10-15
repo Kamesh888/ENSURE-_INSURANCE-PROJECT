@@ -1,0 +1,23 @@
+# Render blueprint for the FastAPI backend (frontend deploys separately on Vercel).
+services:
+  - type: web
+    name: ensure-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.2
+      - key: CORS_ORIGINS
+        sync: false        # set to your Vercel URL, e.g. https://ensure-demo.vercel.app
+      - key: SECRET_KEY
+        generateValue: true   # random signing key for auth tokens
+      - key: SEED_DEMO_DATA
+        value: "true"
+      - key: ENVIRONMENT_LABEL
+        value: DEMO
+      # DATABASE_URL: optional. Default is SQLite on ephemeral disk (demo data re-seeds on restart).
+      # For persistence attach Render Postgres and set DATABASE_URL=postgresql+psycopg://...
